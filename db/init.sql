@@ -9,7 +9,8 @@ create table users (
    user_id serial primary key,
    email varchar(150) not null,
    password varchar(300) not null,
-   username varchar(150) not null
+   username varchar(150) not null,
+   is_admin boolean not null
 );
 
 create table buildings (
