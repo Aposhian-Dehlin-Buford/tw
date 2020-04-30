@@ -51,6 +51,6 @@ create table village_buildings (
 create table village_units (
    village_units_id serial primary key,
    village_id int references villages(village_id),
-   unit_id in references units(unit_id),
+   unit_id int references units(unit_id),
    quantity integer not null
 );
