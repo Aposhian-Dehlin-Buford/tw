@@ -40,7 +40,7 @@ module.exports = {
         req.session.destroy();
         res.sendStatus(200)
     },
-    getUSer: (req, res) => {
+    getUser: (req, res) => {
         if(req.session.user){
             res.status(200).send(req.session.user);
 
