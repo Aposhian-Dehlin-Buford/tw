@@ -1,11 +1,11 @@
-require('dotenv').config()
+require('dotenv').config({path: __dirname + '/../.env'})
 const express= require('express');
 const session= require('express-session');
 const massive= require('massive');
 const {SERVER_PORT, SESSION_SECRET, CONNECTION_STRING}= process.env
 const app= express()
 
-app.usee(express.json())
+app.use(express.json())
 app.use(session({
     resave: false,
     saveUninitialized: true,

@@ -1,5 +1,6 @@
 import axios from 'axios'
-import {SET_VILLAGE, SET_VILLAGES} from './actionTypes'
+import actionTypes from './actionTypes'
+const {SET_VILLAGE, SET_VILLAGES} = actionTypes
 
 const initialState = {
     village: {

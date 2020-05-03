@@ -1,4 +1,5 @@
-import {SET_USER} from './actionTypes'
+import actionTypes from './actionTypes'
+const {SET_USER} = actionTypes
 
 const initialState = {
     user: {}
