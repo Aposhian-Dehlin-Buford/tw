@@ -11,19 +11,19 @@ module.exports = {
     }
     let salt = bcrypt.genSaltSync(10)
     let hash = bcrypt.hashSync(password, salt)
-    let newUser = await db.auth.register_user(username, hash, email)
+    let newUser = await db.auth.register_user({email, username, password: hash})
 
     req.session.user = newUser[0]
     res.status(201).send(req.session.user)
   },
 
   login: async (req, res) => {
-    const { username, password } = req.body
+    const { email, password } = req.body
     const db = req.app.get("db")
 
-    let user = await db.auth.check_user(username)
+    let user = await db.auth.check_user(email)
     if (!user[0]) {
-      return res.status(400).send("Username not found")
+      return res.status(400).send("Emmail not found")
     }
     let authenticated = bcrypt.compareSync(password, user[0].password)
     if (!authenticated) {

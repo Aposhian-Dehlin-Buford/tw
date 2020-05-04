@@ -16,7 +16,6 @@ const Login = ({ setUser }) => {
     e.preventDefault()
     axios.post("/auth/login", { email, password }).then((results) => {
       setUser(results.data)
-      console.log(email, password)
       resetInputs()
       push("/dashboard")
     })

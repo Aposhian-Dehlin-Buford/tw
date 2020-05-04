@@ -30,6 +30,7 @@ massive({
 
 //Controllers
 const authCtrl = require("./controllers/authController")
+const villageCtrl = require('./controllers/villageController')
 
 //ENDPOINTS
 
@@ -39,3 +40,7 @@ app.get("/api/user", authCtrl.getUser)
 app.post("/auth/login", authCtrl.login)
 app.post("/auth/register", authCtrl.register)
 app.post("/auth/logout", authCtrl.logout)
+
+//village endpoints
+app.get('/api/village/:village_id', villageCtrl.getVillage)
+app.get('/api/villages', villageCtrl.getVillages)
