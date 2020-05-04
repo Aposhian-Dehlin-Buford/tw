@@ -1,10 +1,12 @@
 insert into users (
    email,
    username,
-   password
+   password,
+   is_admin
 ) values ( 
    ${email},
    ${username},
-   ${password}
+   ${password},
+   false
 )
-returning username, user_id;
+returning email, username, user_id, is_admin;

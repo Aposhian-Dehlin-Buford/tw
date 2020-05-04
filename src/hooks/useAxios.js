@@ -9,6 +9,7 @@ const useAxios = (dataName, axiosId = null) => {
     const getSingleAxios = `get${camelCaseDataName}`
     const postAxios = `get${camelCaseDataName}`
     const putAxios = `put${camelCaseDataName}`
+    const deleteAxios = `delete${camelCaseDataName}`
     const [axiosData, setAxiosData] = useState([])
     const [singleData, setSingleData] = useState({})
     useEffect(() => {

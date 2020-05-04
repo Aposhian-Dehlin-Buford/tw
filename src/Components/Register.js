@@ -19,7 +19,6 @@ const Register = (props) => {
       .post("/auth/register", { email, username, password })
       .then((results) => {
         setUser(results.data)
-        console.log(email, username, password)
         resetInputs()
         push("/dashboard")
       })
@@ -52,4 +51,4 @@ const Register = (props) => {
   )
 }
 
-export default Register
+export default connect(null, {setUser})(Register)
