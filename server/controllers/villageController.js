@@ -16,6 +16,7 @@ module.exports = {
     const { village_id } = req.params
     let village = await db.village.get_basic_village_info(village_id)
     let villageInfo = village[0]
+    console.log(villageInfo)
     villageInfo.units = await db.village.get_village_unit_info(village_id)
     db.village
       .get_village_building_info(village_id)

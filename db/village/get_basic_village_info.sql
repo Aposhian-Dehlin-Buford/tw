@@ -1,0 +1,1 @@
+SELECT * FROM villages WHERE village_id = $1;
