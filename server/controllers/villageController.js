@@ -3,7 +3,6 @@ module.exports = {
     try {
       const db = req.app.get("db")
       const { user_id } = req.session.user
-      console.log(user_id)
       const myVillages = await db.village.get_user_villages(user_id)
       const otherVillages = await db.village.get_other_users_villages(user_id)
       res.status(200).send({myVillages, otherVillages})
@@ -16,7 +15,6 @@ module.exports = {
     const { village_id } = req.params
     let village = await db.village.get_basic_village_info(village_id)
     let villageInfo = village[0]
-    console.log(villageInfo)
     villageInfo.units = await db.village.get_village_unit_info(village_id)
     db.village
       .get_village_building_info(village_id)

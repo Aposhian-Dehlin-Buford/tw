@@ -4,7 +4,6 @@ import {useSelector} from 'react-redux'
 const Village = () => {
     const village = useSelector(({villageReducer}) => {
         return villageReducer.village})
-    console.log(village)
     return (
         <div>
             <div>Village</div>
