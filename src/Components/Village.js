@@ -1,10 +1,16 @@
 import React from 'react'
-// import useAxios from '../hooks/useAxios'
+import {useSelector} from 'react-redux'
 
 const Village = () => {
-    // const {villages} = useAxios('village')
+    const village = useSelector(({villageReducer}) => {
+        return villageReducer.village})
     return (
-        <div>Village</div>
+        <div>
+            <div>Village</div>
+            {village.village_id && (
+            <div>{village.village_name}</div>
+            )}
+        </div>
     )
 }
 

@@ -3,7 +3,6 @@ module.exports = {
     try {
       const db = req.app.get("db")
       const { user_id } = req.session.user
-      console.log(user_id)
       const myVillages = await db.village.get_user_villages(user_id)
       const otherVillages = await db.village.get_other_users_villages(user_id)
       res.status(200).send({myVillages, otherVillages})

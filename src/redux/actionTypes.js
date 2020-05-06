@@ -1,7 +1,13 @@
 const actionTypes = {
     SET_USER: 'SET_USER',
     SET_VILLAGE: 'SET_VILLAGE',
-    SET_VILLAGES: 'SET_VILLAGES'
+    SET_VILLAGES: 'SET_VILLAGES',
+    GET_VILLAGE: 'GET_VILLAGE',
+    GET_VILLAGES: 'GET_VILLAGES',
+
+    PENDING: '_PENDING',
+    FULFILLED: '_FULFILLED',
+    REJECTED: '_REJECTED'
 }
 
 export default actionTypes
