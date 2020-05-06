@@ -3,12 +3,19 @@ module.exports = {
     try {
       const db = req.app.get("db")
       const { user_id } = req.session.user
-      const myVillages = await db.village.get_user_villages(user_id)
-      const otherVillages = await db.village.get_other_users_villages(user_id)
-      res.status(200).send({myVillages, otherVillages})
+      const villages = await db.village.get_user_villages(user_id)
+      // const otherVillages = await db.village.get_other_users_villages(user_id)
+      res.status(200).send(villages)
     } catch (err) {
       res.status(500).send(err)
     }
+  },
+  getOtherVillages: (req, res) => {
+    const db = req.app.get('db')
+    const {user_id} = req.session.user
+    db.village.get_other_users_villages(user_id).then(results => {
+      res.status(200).send(results.data)
+    }).catch(err => res.status(500).send(err))
   },
   getVillage: async (req, res) => {
     const db = req.app.get("db")

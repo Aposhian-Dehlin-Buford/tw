@@ -44,3 +44,4 @@ app.post("/auth/logout", authCtrl.logout)
 //village endpoints
 app.get('/api/village/:village_id', villageCtrl.getVillage)
 app.get('/api/villages', villageCtrl.getVillages)
+app.get('/api/villages/other', villageCtrl.getOtherVillages)

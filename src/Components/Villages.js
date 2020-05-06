@@ -1,24 +1,16 @@
-import React, {useEffect} from "react"
-import useAxios from "../hooks/useAxios"
-import {setVillage, setVillages} from '../redux/villageReducer'
-import {connect} from 'react-redux'
+import React from "react"
+import {useSelector} from 'react-redux'
 
-const Villages = ({myVillages}) => {
-  // const { villages } = useAxios("village")
-  // const { myVillages, otherVillages } = villages
-  // useEffect(() => {
-  //     // setVillages(villages)
-  //     setVillage(villages[0])
-  // }, [])
+const Villages = () => {
+  const villages = useSelector(({ villageReducer }) => villageReducer.villages)
   return (
     <div>
-      {myVillages &&
-        myVillages.map(({ village_name, village_id }) => (
+      <div>Villages:</div>
+      {villages &&
+        villages.map(({ village_name, village_id }) => (
           <div key={village_id}>{village_name}</div>
         ))}
     </div>
   )
 }
-
-// export default Villages
-export default connect(null, {setVillage, setVillages})(Villages)
+export default Villages

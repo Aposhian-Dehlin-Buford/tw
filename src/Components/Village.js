@@ -1,17 +1,13 @@
-import React from 'react'
-import {useSelector} from 'react-redux'
+import React from "react"
+import { useSelector } from "react-redux"
 
 const Village = () => {
-    const village = useSelector(({villageReducer}) => {
-        return villageReducer.village})
-    return (
-        <div>
-            <div>Village</div>
-            {village.village_id && (
-            <div>{village.village_name}</div>
-            )}
-        </div>
-    )
+  const {village_id, village_name} = useSelector(({ villageReducer }) => villageReducer.village)
+  return (
+    <div>
+      <div>Village:</div>
+      {village_id && <div>{village_name}</div>}
+    </div>
+  )
 }
-
 export default Village
