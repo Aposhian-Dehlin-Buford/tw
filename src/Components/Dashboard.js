@@ -3,27 +3,38 @@ import useAuth from "../hooks/useAuth"
 import { useSelector } from "react-redux"
 import Village from "./Village"
 import Villages from "./Villages"
-import { setVillage, setVillages, getVillage, getVillages } from "../redux/villageReducer"
+import {
+  getVillage,
+  getVillages,
+  getOtherVillages
+} from "../redux/villageReducer"
 import { connect } from "react-redux"
 
-import useAxios from "../hooks/useAxios"
-
-const Dashboard = ({setVillage, setVillages, getVillage, getVillages}) => {
+const Dashboard = ({ getVillage, getVillages, getOtherVillages }) => {
   useAuth()
-  const { villages } = useAxios("village")
-  const { myVillages, otherVillages } = villages
+  // let { villages } = useAxios("village")
+  // const { villages, otherVillages } = villages
+  const villages = useSelector(({ villageReducer }) => villageReducer.villages)
   useEffect(() => {
-    if(myVillages && myVillages.length > 0){
-      getVillage(myVillages[0].village_id)
+    getVillages()
+    getOtherVillages()
+  }, [])
+  useEffect(() => {
+    if (villages && villages.length > 0) {
+      getVillage(villages[0].village_id)
     }
-}, [myVillages])
+  }, [villages])
   return (
     <div>
       <div>Dashboard</div>
       <Village />
-      <Villages myVillages={myVillages} />
+      {villages && villages[0] && <Villages myVillages={villages} />}
     </div>
   )
 }
 
-export default connect(null, { setVillage, setVillages, getVillage, getVillages })(Dashboard)
+export default connect(null, {
+  getVillage,
+  getVillages,
+  getOtherVillages
+})(Dashboard)
