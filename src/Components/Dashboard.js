@@ -3,6 +3,8 @@ import useAuth from "../hooks/useAuth"
 import { useSelector } from "react-redux"
 import Village from "./Village"
 import Villages from "./Villages"
+import OtherVillages from './OtherVillages'
+import Map from './Map'
 import {
   getVillage,
   getVillages,
@@ -11,10 +13,8 @@ import {
 import { connect } from "react-redux"
 
 const Dashboard = ({ getVillage, getVillages, getOtherVillages }) => {
-  useAuth()
-  // let { villages } = useAxios("village")
-  // const { villages, otherVillages } = villages
   const villages = useSelector(({ villageReducer }) => villageReducer.villages)
+  useAuth()
   useEffect(() => {
     getVillages()
     getOtherVillages()
@@ -28,7 +28,9 @@ const Dashboard = ({ getVillage, getVillages, getOtherVillages }) => {
     <div>
       <div>Dashboard</div>
       <Village />
-      {villages && villages[0] && <Villages myVillages={villages} />}
+      <Villages />
+      <OtherVillages />
+      <Map />
     </div>
   )
 }
