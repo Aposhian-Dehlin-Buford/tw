@@ -1,16 +1,20 @@
 import React from "react"
-import {useSelector} from 'react-redux'
+import { useSelector, connect } from "react-redux"
+import { getVillage } from "../redux/villageReducer"
 
-const Villages = () => {
-  const villages = useSelector(({ villageReducer }) => villageReducer.villages)
+const Villages = ({ getVillage }) => {
+  const {villages} = useSelector(({ villageReducer }) => villageReducer)
   return (
     <div>
       <div>Villages:</div>
       {villages &&
         villages.map(({ village_name, village_id }) => (
-          <div key={village_id}>{village_name}</div>
+          <div key={village_id} onClick={() => getVillage(village_id)}>
+            {village_name}
+          </div>
         ))}
     </div>
   )
 }
-export default Villages
+
+export default connect(null, { getVillage })(Villages)
