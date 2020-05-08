@@ -1,5 +1,5 @@
 module.exports = {
-  getVillages: async (req, res) => {
+  getVillagesOld: async (req, res) => {
     try {
       const db = req.app.get("db")
       const { user_id } = req.session.user
@@ -9,12 +9,33 @@ module.exports = {
       res.status(500).send(err)
     }
   },
+  getVillages: (req, res) => {
+    const db = req.app.get("db")
+    const { user_id } = req.session.user
+    db.village
+      .get_user_villages(user_id)
+      .then(async (results) => {
+        for (let i = 0; i < results.length; i++) {
+          results[i].buildings = await db.village.get_village_building_info(
+            results[i].village_id
+          )
+          results[i].units = await db.village.get_village_unit_info(
+            results[i].village_id
+          )
+        }
+        res.status(200).send(results)
+      })
+      .catch((err) => res.status(500).send(err))
+  },
   getOtherVillages: (req, res) => {
-    const db = req.app.get('db')
-    const {user_id} = req.session.user
-    db.village.get_other_users_villages(user_id).then(results => {
-      res.status(200).send(results.data)
-    }).catch(err => res.status(500).send(err))
+    const db = req.app.get("db")
+    const { user_id } = req.session.user
+    db.village
+      .get_other_users_villages(user_id)
+      .then((results) => {
+        res.status(200).send(results.data)
+      })
+      .catch((err) => res.status(500).send(err))
   },
   getVillage: async (req, res) => {
     const db = req.app.get("db")

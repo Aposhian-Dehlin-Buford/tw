@@ -24,16 +24,16 @@ const initialState = {
   loading: false,
 }
 
-export function getVillage(village_id) {
-  const village = axios
-    .get(`/api/village/${village_id}`)
-    .then((results) => results.data)
-    .catch((err) => console.log(err))
-  return {
-    type: GET_VILLAGE,
-    payload: village,
-  }
-}
+// export function getVillage(village_id) {
+//   const village = axios
+//     .get(`/api/village/${village_id}`)
+//     .then((results) => results.data)
+//     .catch((err) => console.log(err))
+//   return {
+//     type: GET_VILLAGE,
+//     payload: village,
+//   }
+// }
 
 export function getVillages() {
   const villages = axios
@@ -51,10 +51,10 @@ export function getOtherVillages() {
     .get("/api/villages/other")
     .then((results) => results.data)
     .catch((err) => console.log(err))
-    return {
-      type: GET_OTHER_VILLAGES,
-      payload: otherVillages
-    }
+  return {
+    type: GET_OTHER_VILLAGES,
+    payload: otherVillages,
+  }
 }
 
 export function setVillage(payload) {
@@ -69,11 +69,11 @@ export default function villageReducer(state = initialState, action) {
   const { type, payload } = action
   switch (type) {
     case GET_VILLAGE + FULFILLED:
-      return { ...state, village: payload}
+      return { ...state, village: payload }
     case GET_VILLAGES + FULFILLED:
-      return { ...state, villages: payload}
+      return { ...state, villages: payload }
     case GET_OTHER_VILLAGES + FULFILLED:
-      return {...state, otherVillages: payload}
+      return { ...state, otherVillages: payload }
 
     case SET_VILLAGE:
       return { ...state, village: payload }

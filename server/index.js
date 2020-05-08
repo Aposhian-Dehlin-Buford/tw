@@ -32,6 +32,9 @@ massive({
 const authCtrl = require("./controllers/authController")
 const villageCtrl = require('./controllers/villageController')
 
+//MIDDLEWARE
+const authMid = require("./middleware/authMiddleware")
+
 //ENDPOINTS
 
 //auth endpoints
@@ -39,9 +42,12 @@ const villageCtrl = require('./controllers/villageController')
 app.get("/api/user", authCtrl.getUser)
 app.post("/auth/login", authCtrl.login)
 app.post("/auth/register", authCtrl.register)
-app.post("/auth/logout", authCtrl.logout)
+app.post("/auth/logout", authMid.usersOnly, authCtrl.logout)
 
 //village endpoints
-app.get('/api/village/:village_id', villageCtrl.getVillage)
-app.get('/api/villages', villageCtrl.getVillages)
-app.get('/api/villages/other', villageCtrl.getOtherVillages)
+app.get('/api/village/:village_id', authMid.usersOnly, villageCtrl.getVillage)
+app.get('/api/villages', authMid.usersOnly, villageCtrl.getVillages)
+app.get('/api/villages/other', authMid.usersOnly, villageCtrl.getOtherVillages)
+
+//new village endpoint
+// app.get('/api/villages', villageCtrl.getVillagesNew)

@@ -1,15 +1,15 @@
 import React from "react"
 import { useSelector, connect } from "react-redux"
-import { getVillage } from "../redux/villageReducer"
+import { setVillage } from "../redux/villageReducer"
 
-const Villages = ({ getVillage }) => {
+const Villages = ({ setVillage }) => {
   const {villages} = useSelector(({ villageReducer }) => villageReducer)
   return (
     <div>
       <div>Villages:</div>
       {villages &&
-        villages.map(({ village_name, village_id }) => (
-          <div key={village_id} onClick={() => getVillage(village_id)}>
+        villages.map(({ village_name, village_id }, index) => (
+          <div key={village_id} onClick={() => setVillage(villages[index])}>
             {village_name}
           </div>
         ))}
@@ -17,4 +17,4 @@ const Villages = ({ getVillage }) => {
   )
 }
 
-export default connect(null, { getVillage })(Villages)
+export default connect(null, { setVillage })(Villages)
