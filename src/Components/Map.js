@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
-import { getVillage } from "../redux/villageReducer"
+import { setVillage } from "../redux/villageReducer"
 import { connect } from "react-redux"
 
 const generateGrid = () => {
@@ -20,22 +20,26 @@ const generateGrid = () => {
   return genGrid
 }
 
-const Map = ({ getVillage }) => {
+const Map = ({ setVillage }) => {
   const { village, villages, otherVillages } = useSelector(
     ({ villageReducer }) => villageReducer
   )
   const [grid, setGrid] = useState([])
   useEffect(() => {
     let genGrid = generateGrid()
-    for (let i = 0; i < villages.length; i++) {
-      genGrid[villages[i].y_coord][villages[i].x_coord].village = true
-      genGrid[villages[i].y_coord][villages[i].x_coord].village_id =
-        villages[i].village_id
-    }
-    for (let j = 0; j < otherVillages.length; j++) {
-      genGrid[otherVillages[j].y_coord][villages[j].x_coord].otherVillage = true
-      genGrid[otherVillages[j].y_coord][villages[j].x_coord].village_id =
-        otherVillages[j].village_id
+    if (villages && villages.length > 0) {
+      for (let i = 0; i < villages.length; i++) {
+        genGrid[villages[i].y_coord][villages[i].x_coord].village = true
+        genGrid[villages[i].y_coord][villages[i].x_coord].village_id =
+          villages[i].village_id
+      }
+      for (let j = 0; j < otherVillages.length; j++) {
+        genGrid[otherVillages[j].y_coord][
+          villages[j].x_coord
+        ].otherVillage = true
+        genGrid[otherVillages[j].y_coord][villages[j].x_coord].village_id =
+          otherVillages[j].village_id
+      }
     }
     setGrid(genGrid)
   }, [villages, otherVillages, village])
@@ -65,7 +69,14 @@ const Map = ({ getVillage }) => {
                   border: "1px solid white",
                   backgroundColor: cell.village && "blue",
                 }}
-                onClick={() => cell.village && getVillage(cell.village_id)}
+                onClick={() => {
+                  cell.village &&
+                    setVillage(
+                      villages.find(
+                        (village) => village.village_id === cell.village_id
+                      )
+                    )
+                }}
               >
                 <div
                   style={{
@@ -87,9 +98,9 @@ const Map = ({ getVillage }) => {
             ))
           )}
       </div>
-      <pre>{JSON.stringify(grid, null, 2)} </pre>
+      {/* <pre>{JSON.stringify(grid, null, 2)} </pre> */}
     </div>
   )
 }
 
-export default connect(null, { getVillage })(Map)
+export default connect(null, { setVillage })(Map)

@@ -6,13 +6,13 @@ import Villages from "./Villages"
 import OtherVillages from './OtherVillages'
 import Map from './Map'
 import {
-  getVillage,
+  setVillage,
   getVillages,
   getOtherVillages
 } from "../redux/villageReducer"
 import { connect } from "react-redux"
 
-const Dashboard = ({ getVillage, getVillages, getOtherVillages }) => {
+const Dashboard = ({ setVillage, getVillages, getOtherVillages }) => {
   const villages = useSelector(({ villageReducer }) => villageReducer.villages)
   useAuth()
   useEffect(() => {
@@ -21,7 +21,7 @@ const Dashboard = ({ getVillage, getVillages, getOtherVillages }) => {
   }, [])
   useEffect(() => {
     if (villages && villages.length > 0) {
-      getVillage(villages[0].village_id)
+      setVillage(villages[0])
     }
   }, [villages])
   return (
@@ -36,7 +36,7 @@ const Dashboard = ({ getVillage, getVillages, getOtherVillages }) => {
 }
 
 export default connect(null, {
-  getVillage,
+  setVillage,
   getVillages,
   getOtherVillages
 })(Dashboard)
