@@ -1,6 +1,8 @@
 import React, { useEffect } from "react"
 import useAuth from "../hooks/useAuth"
 import { useSelector } from "react-redux"
+import {Route} from 'react-router-dom'
+import OtherVillage from './OtherVillage'
 import Village from "./Village"
 import Villages from "./Villages"
 import OtherVillages from './OtherVillages'
@@ -13,7 +15,7 @@ import {
 import { connect } from "react-redux"
 
 const Dashboard = ({ setVillage, getVillages, getOtherVillages }) => {
-  const villages = useSelector(({ villageReducer }) => villageReducer.villages)
+  const {villages} = useSelector(({ villageReducer }) => villageReducer)
   useAuth()
   useEffect(() => {
     getVillages()
@@ -27,6 +29,7 @@ const Dashboard = ({ setVillage, getVillages, getOtherVillages }) => {
   return (
     <div>
       <div>Dashboard</div>
+      <Route path = '/dashboard/othervillage/:village_id' component = {OtherVillage} />
       <Village />
       <Villages />
       <OtherVillages />

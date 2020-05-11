@@ -35,14 +35,15 @@ const Map = ({ setVillage }) => {
       }
       for (let j = 0; j < otherVillages.length; j++) {
         genGrid[otherVillages[j].y_coord][
-          villages[j].x_coord
+          otherVillages[j].x_coord
         ].otherVillage = true
-        genGrid[otherVillages[j].y_coord][villages[j].x_coord].village_id =
+        genGrid[otherVillages[j].y_coord][otherVillages[j].x_coord].village_id =
           otherVillages[j].village_id
       }
     }
     setGrid(genGrid)
   }, [villages, otherVillages, village])
+  console.log(otherVillages)
   return (
     <div>
       <div>Map</div>

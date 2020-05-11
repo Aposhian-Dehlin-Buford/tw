@@ -1,7 +1,7 @@
 module.exports = {
   usersOnly: (req, res, next) => {
     if (!req.session.user) {
-      return res.satus(401).send("User is not logged in")
+      return res.status(401).send("User is not logged in")
     }
     next()
   },
