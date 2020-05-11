@@ -14,7 +14,12 @@ app.use(
     cookie: { maxAge: 1000 * 60 * 60 },
   })
 )
+//Controllers
+const authCtrl = require("./controllers/authController")
+const villageCtrl = require("./controllers/villageController")
+const combatCtrl = require("./controllers/combatController")
 
+//db and socket connections
 massive({
   connectionString: CONNECTION_STRING,
   ssl: { rejectUnauthorized: false },
@@ -22,20 +27,23 @@ massive({
   .then((db) => {
     app.set("db", db)
     console.log("database is building its tribe")
-    app.listen(SERVER_PORT, () =>
-      console.log(`server is raiding tribes at port ${SERVER_PORT}`)
+    const io = require("socket.io")(
+      app.listen(SERVER_PORT, () =>
+        console.log(`server is raiding tribes at port ${SERVER_PORT}`)
+      )
     )
+
+    //SOCKET ENDPOINTS
+    io.on("connection", (socket) => {
+      socket.on("attack", (body) => combatCtrl.attack(io, socket, body))
+    })
   })
   .catch((err) => console.log(err))
-
-//Controllers
-const authCtrl = require("./controllers/authController")
-const villageCtrl = require('./controllers/villageController')
 
 //MIDDLEWARE
 const authMid = require("./middleware/authMiddleware")
 
-//ENDPOINTS
+//REST ENDPOINTS
 
 //auth endpoints
 
@@ -45,9 +53,9 @@ app.post("/auth/register", authCtrl.register)
 app.post("/auth/logout", authMid.usersOnly, authCtrl.logout)
 
 //village endpoints
-app.get('/api/village/:village_id', authMid.usersOnly, villageCtrl.getVillage)
-app.get('/api/villages', authMid.usersOnly, villageCtrl.getVillages)
-app.get('/api/villages/other', authMid.usersOnly, villageCtrl.getOtherVillages)
+app.get("/api/village/:village_id", authMid.usersOnly, villageCtrl.getVillage)
+app.get("/api/villages", authMid.usersOnly, villageCtrl.getVillages)
+app.get("/api/villages/other", authMid.usersOnly, villageCtrl.getOtherVillages)
 
 //new village endpoint
 // app.get('/api/villages', villageCtrl.getVillagesNew)

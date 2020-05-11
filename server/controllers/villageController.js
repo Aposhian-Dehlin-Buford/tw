@@ -1,14 +1,14 @@
 module.exports = {
-  getVillagesOld: async (req, res) => {
-    try {
-      const db = req.app.get("db")
-      const { user_id } = req.session.user
-      const villages = await db.village.get_user_villages(user_id)
-      res.status(200).send(villages)
-    } catch (err) {
-      res.status(500).send(err)
-    }
-  },
+  // getVillagesOld: async (req, res) => {
+  //   try {
+  //     const db = req.app.get("db")
+  //     const { user_id } = req.session.user
+  //     const villages = await db.village.get_user_villages(user_id)
+  //     res.status(200).send(villages)
+  //   } catch (err) {
+  //     res.status(500).send(err)
+  //   }
+  // },
   getVillages: (req, res) => {
     const db = req.app.get("db")
     const { user_id } = req.session.user
@@ -33,7 +33,7 @@ module.exports = {
     db.village
       .get_other_users_villages(user_id)
       .then((results) => {
-        res.status(200).send(results.data)
+        res.status(200).send(results)
       })
       .catch((err) => res.status(500).send(err))
   },
@@ -63,7 +63,7 @@ module.exports = {
       await db.village.create_building_info(village_id)
       let villageInfoArr = await db.village.get_basic_village_info(village_id)
       let villageInfo = villageInfoArr[0]
-      const buildingResults = awaitdb.village.get_village_building_info(
+      const buildingResults = await db.village.get_village_building_info(
         village_id
       )
       villageInfo.buildings = buildingResults
