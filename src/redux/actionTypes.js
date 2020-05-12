@@ -12,10 +12,14 @@ const actionTypes = {
   GET_ATTACKS: "SEND_ATTACK",
   SET_ATTACKS: "SEND_ATTACK",
 
+  //Socket actions
+  SET_SOCKET: 'SET_SOCKET',
+
   //Middleware return types
   PENDING: "_PENDING",
   FULFILLED: "_FULFILLED",
   REJECTED: "_REJECTED",
+
 }
 
 export default actionTypes

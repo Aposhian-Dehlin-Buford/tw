@@ -1,6 +1,8 @@
 import axios from "axios"
+import io from 'socket.io-client'
 import actionTypes from "./actionTypes"
 const { SEND_ATTACK, GET_ATTACKS, SET_ATTACKS, FULFILLED } = actionTypes
+let socket = io.connect('http://localhost:3333')
 
 const initialState = {
   attacks: [],
@@ -24,16 +26,25 @@ export function setAttacks(attacks) {
   }
 }
 
-export function sendAttack(units) {
-  const attacks = axios
-    .post("/api/attacks", { units })
-    .then((results) => results.data)
-    .catch((err) => console.log(err))
+export function sendAttack(){
+  console.log('attacking village')
+  socket.emit('attack', {units: []})
   return {
     type: SEND_ATTACK,
-    payload: attacks,
+    payload: []
   }
 }
+
+// export function sendAttack(units) {
+//   const attacks = axios
+//     .post("/api/attacks", { units })
+//     .then((results) => results.data)
+//     .catch((err) => console.log(err))
+//   return {
+//     type: SEND_ATTACK,
+//     payload: attacks,
+//   }
+// }
 
 export default function attackReducer(state = initialState, action) {
   const { type, payload } = action
@@ -42,7 +53,7 @@ export default function attackReducer(state = initialState, action) {
       return { ...state, attacks: payload }
     case GET_ATTACKS + FULFILLED:
       return { ...state, attacks: payload }
-    case SET_ATTACKS + FULFILLED:
+    case SET_ATTACKS:
       return { ...state, attacks: payload }
     default:
       return state
