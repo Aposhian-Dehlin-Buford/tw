@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import { useHistory } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { setVillage } from "../redux/villageReducer"
 import { connect } from "react-redux"
@@ -25,6 +26,7 @@ const Map = ({ setVillage }) => {
     ({ villageReducer }) => villageReducer
   )
   const [grid, setGrid] = useState([])
+  const { push } = useHistory()
   useEffect(() => {
     let genGrid = generateGrid()
     if (villages && villages.length > 0) {
@@ -43,7 +45,6 @@ const Map = ({ setVillage }) => {
     }
     setGrid(genGrid)
   }, [villages, otherVillages, village])
-  console.log(otherVillages)
   return (
     <div>
       <div>Map</div>
@@ -77,6 +78,10 @@ const Map = ({ setVillage }) => {
                         (village) => village.village_id === cell.village_id
                       )
                     )
+                    push('/dashboard/village')
+                  if (cell.otherVillage) {
+                    push(`/dashboard/othervillage/${cell.village_id}`)
+                  }
                 }}
               >
                 <div

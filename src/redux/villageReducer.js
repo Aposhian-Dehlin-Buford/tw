@@ -47,7 +47,6 @@ export function getVillages() {
 }
 
 export function getOtherVillages() {
-  console.log('hit')
   const otherVillages = axios
     .get("/api/villages/other")
     .then((results) => results.data)

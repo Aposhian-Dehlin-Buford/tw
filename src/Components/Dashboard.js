@@ -1,4 +1,5 @@
 import React, { useEffect } from "react"
+import {useHistory} from 'react-router-dom'
 import useAuth from "../hooks/useAuth"
 import { useSelector } from "react-redux"
 import {Route} from 'react-router-dom'
@@ -16,6 +17,7 @@ import { connect } from "react-redux"
 
 const Dashboard = ({ setVillage, getVillages, getOtherVillages }) => {
   const {villages} = useSelector(({ villageReducer }) => villageReducer)
+  const {push} = useHistory()
   useAuth()
   useEffect(() => {
     getVillages()
@@ -24,13 +26,14 @@ const Dashboard = ({ setVillage, getVillages, getOtherVillages }) => {
   useEffect(() => {
     if (villages && villages.length > 0) {
       setVillage(villages[0])
+      push('/dashboard/village')
     }
   }, [villages])
   return (
     <div>
       <div>Dashboard</div>
-      <Route path = '/dashboard/othervillage/:village_id' component = {OtherVillage} />
-      <Village />
+      <Route exact path = '/dashboard/othervillage/:village_id' component = {OtherVillage} />
+      <Route exact path = '/dashboard/village' Village component = {Village} />
       <Villages />
       <OtherVillages />
       <Map />

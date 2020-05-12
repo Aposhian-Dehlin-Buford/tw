@@ -4,7 +4,6 @@ import { useSelector } from "react-redux"
 const Village = () => {
   const village = useSelector(({ villageReducer }) => villageReducer.village)
   const {village_id, village_name, units, buildings} = village
-  console.log(village)
   return (
     <div>
       <div>Village:</div>
