@@ -13,4 +13,4 @@ insert into village_buildings (village_id, building_id)
 values (1, 1);
 
 insert into village_units (village_id, unit_id, quantity)
-values (1, 1, 50), (1, 2, 20);
+values (1, 1, 50), (1, 2, 20), (3, 1, 10);
