@@ -35,7 +35,7 @@ massive({
 
     //SOCKET ENDPOINTS
     io.on("connection", (socket) => {
-      socket.on("attack", (body) => combatCtrl.attack(io, socket, body))
+      socket.on("attack", (body) => combatCtrl.attack(io, socket, db, body))
     })
   })
   .catch((err) => console.log(err))

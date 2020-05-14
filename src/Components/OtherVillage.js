@@ -1,29 +1,39 @@
-import React, {useState, useEffect} from 'react'
-import {useParams, useHistory} from 'react-router-dom'
+import React, { useState, useEffect } from "react"
+import { useParams } from "react-router-dom"
 import { useSelector } from "react-redux"
+import { connect } from "react-redux"
+import { sendAttack } from "../redux/attackReducer"
 
-const OtherVillage = () => {
-    const {village_id} = useParams()
-    const {otherVillages} = useSelector(({villageReducer}) => villageReducer)
-    const [{village_name}, setVillage] = useState({village_name: ''})
-    const {push} = useHistory()
+const OtherVillage = ({ sendAttack }) => {
+  const { village_id } = useParams()
+  const { village, otherVillages } = useSelector(({ villageReducer }) => villageReducer)
+  const {socket} = useSelector(({socketReducer}) => socketReducer)
+  const [otherVillage, setVillage] = useState({ village_name: "" })
 
-    useEffect(() => {
-        if(!village_id){
-            console.log('hit')
-            push('/dashboard')
+  useEffect(() => {
+    if (otherVillages && otherVillages.length > 0) {
+      setVillage(
+        otherVillages.find((village) => +village.village_id === +village_id)
+      )
+    }
+  }, [village_id, otherVillages])
+  return (
+    <div>
+      <div>Other Village:</div>
+      <h1>Name: {otherVillage.village_name} </h1>
+      <div
+        onClick={() =>
+          socket.emit("attack", {
+            attackingVillage: village,
+            defendingVillage: otherVillage,
+            units: village.units
+          })
         }
-        if(otherVillages && otherVillages.length > 0){
-            setVillage(otherVillages.find(village => +village.village_id === +village_id))
-        }
-    }, [village_id, otherVillages])
-    console.log(village_id)
-    return (
-        <div>
-            <div>Other Village</div>
-            <div>{village_name}</div>
-        </div>
-    )
+      >
+        Send Attack
+      </div>
+    </div>
+  )
 }
 
-export default OtherVillage
+export default connect(null, { sendAttack })(OtherVillage)
