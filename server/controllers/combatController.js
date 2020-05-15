@@ -11,11 +11,11 @@ const resolveAttack = (attackingUnits, defendingUnits) => {
     if(attPower >= Math.min(...defendingUnits.map(e => e.health))){
     const randomNum = Math.floor(Math.random() * defendingUnits.length)
     defendingUnits[randomNum].quantity --
-    attPower -= defendUnits[randomNum].health
-    if(def.units[randomNum].quantity <= 0){
+    attPower -= defendingUnits[randomNum].health
+    if(defendingUnits[randomNum].quantity <= 0){
       defendingUnits.splice(randomNum, 1)
     }
-    return damageCalc(att, def, attPower)
+    return damageCalc(attackingUnits, defendingUnits, attPower)
   }
   else{
     return defendingUnits
