@@ -1,48 +1,29 @@
 const resolveAttack = (attackingUnits, defendingUnits) => {
-  console.log("combat calculation")
-  const att = attackingUnits.reduce(
-    (acc, e) => {
-      acc.totalHealth += e.health * e.quantity
-      acc.totalPower += e.attack * e.quantity
-      acc.totalQuantity += e.quantity
-      acc.units.push({ [e.name]: { ...e } })
-      return acc
-    },
-    { totalHealth: 0, totalPower: 0, totalQuantity: 0, units: [] }
-  )
-  const def = defendingUnits.reduce(
-    (acc, e) => {
-      console.log(e)
-      acc.totalHealth += e.health * e.quantity
-      acc.totalPower += e.defence * e.quantity
-      acc.totalQuantity += e.quantity
-      acc.units.push({ [e.name]: { ...e } })
-      return acc
-    },
-    { totalHealth: 0, totalPower: 0, totalQuantity: 0, units: [] }
-  )
-  const damageCalc = (att, def) => {
-    if (att.totalPower >= def.totalHealth / def.totalQuantity) {
-      const randomNum = Math.floor(Math.random() * def.units.length)
-      def.totalQuantity--
-      def.totalHealth -= 50
-      att.totalPower -= 50
-      def.units[randomNum].quantity--
-      def.totalHealth -= 50
-      if (def.units[randomNum].quantity <= 0) {
-        def.units.splice(randomNum, 1)
-      }
-      return damageCalc(att, def)
-    } else {
-      return def
+  console.log('combat calculation')
+  const attPower = attackingUnits.reduce((acc, e) => {
+    acc += e.attack * e.quantity
+  }, 0)
+  const defPower = defendingUnits.reduce((acc, e) => {
+    acc += e.defence * e.quantity
+  }, 0)
+
+  const damageCalc = (attackingUnits, defendingUnits, attPower) => {
+    if(attPower >= Math.min(...defendingUnits.map(e => e.health))){
+    const randomNum = Math.floor(Math.random() * defendingUnits.length)
+    defendingUnits[randomNum].quantity --
+    attPower -= defendUnits[randomNum].health
+    if(def.units[randomNum].quantity <= 0){
+      defendingUnits.splice(randomNum, 1)
     }
+    return damageCalc(att, def, attPower)
   }
-  const remainingDef = damageCalc(att, def)
-  const remainingAtt = damageCalc(def, att)
-  return {
-    remainingAtt: remainingAtt.units,
-    remainingDef: remainingDef.units,
+  else{
+    return defendingUnits
   }
+}
+  const remainingDef = damageCalc(attackingUnits, defendingUnits, attPower)
+  const remainingAtt = damageCalc(defendingUnits, attackingUnits, defPower)
+  return {remainingAtt, remainingDef}
 }
 
 module.exports = {
